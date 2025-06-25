@@ -11,4 +11,4 @@ COPY JavaBridge.war /usr/local/tomcat/webapps/
 EXPOSE 8080
 
 # Khởi động Tomcat
-CMD ["catalina.sh", "run"]
+CMD ["startup.sh", "run"]
