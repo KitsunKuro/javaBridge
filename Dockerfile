@@ -1,14 +1,18 @@
-# Base image: Tomcat 9 với JDK 17
+# 1. Sử dụng Tomcat 9 với JDK 8 để tương thích với môi trường local
 FROM tomcat:9.0-jdk8
 
-# Xóa các ứng dụng mặc định của Tomcat để tránh xung đột
+# 2. Xóa ứng dụng mặc định của Tomcat
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy file .war đã build sẵn vào thư mục ứng dụng của Tomcat
+# 3. Copy file JavaBridge.war vào thư mục deploy của Tomcat
 COPY JavaBridge.war /usr/local/tomcat/webapps/
 
-# Expose cổng 8080, Render sẽ tự ánh xạ sang HTTPS ngoài
+# 4. Cài unzip và giải nén .war (exploded deployment)
+RUN apt-get update && apt-get install -y unzip
+RUN unzip /usr/local/tomcat/webapps/JavaBridge.war -d /usr/local/tomcat/webapps/JavaBridge
+
+# 5. Mở port 8080
 EXPOSE 8080
 
-# Khởi động Tomcat
+# 6. Khởi động Tomcat
 CMD ["catalina.sh", "run"]
