@@ -3,6 +3,7 @@ FROM tomcat:9.0-jdk8
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 COPY JavaBridge.war /usr/local/tomcat/webapps/
+COPY server.xml /usr/local/tomcat/conf/server.xml
 
 # Cài unzip và php-cgi, sau đó giải nén WAR
 RUN apt-get update && \
